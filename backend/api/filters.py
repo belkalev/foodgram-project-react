@@ -1,11 +1,11 @@
 from django_filters import rest_framework as filters
 
-from recipes.models import Ingredient, Recipes
+from recipes.models import Ingredient, Recipe
 
 
 class IngredientsFilter(filters.FilterSet):
     """
-    Фильтр ингридиентов.
+    Фильтр ингредиентов.
     """
     name = filters.CharFilter(
         field_name='name',
@@ -32,11 +32,11 @@ class RecipesFilter(filters.FilterSet):
     tags = filters.AllValuesMultipleFilter(field_name='tags__slug')
 
     def favorite_filter(self, queryset, name, value):
-        return Recipes.objects.filter(favorite__user=self.request.user)
+        return Recipe.objects.filter(favorite__user=self.request.user)
 
     def shopping_cart_filter(self, queryset, name, value):
-        return Recipes.objects.filter(shopping_cart__user=self.request.user)
+        return Recipe.objects.filter(shopping_cart__user=self.request.user)
 
     class Meta:
-        model = Recipes
+        model = Recipe
         fields = ['author']

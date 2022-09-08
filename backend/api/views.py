@@ -6,15 +6,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet
 from rest_framework import filters, status, viewsets
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from recipes.models import (Favorite, IngredientAmount, Ingredient, Recipes,
-                            Shoplist, Tags)
+from recipes.models import (Favorite, IngredientAmount, Ingredient, Recipe,
+                            Shoplist, Tag)
 from users.models import Follow, User
-
 from .filters import IngredientsFilter, RecipesFilter
 from .pagination import LimitPageNumberPagination
 from .permissions import IsAdminOrAuthor, IsAdminOrReadOnly
@@ -60,7 +58,7 @@ class UsersViewSet(UserViewSet):
         author = get_object_or_404(User, id=id)
         if request.method == 'POST':
             if request.user.id == author.id:
-                raise ValidationError(SUBSCRIBE_TO_YOURSELF)
+                return Response(SUBSCRIBE_TO_YOURSELF)
             else:
                 serializer = FollowSerializer(
                     Follow.objects.create(user=request.user, author=author),
@@ -84,7 +82,7 @@ class UsersViewSet(UserViewSet):
 
 
 class TagsViewSet(viewsets.ModelViewSet):
-    queryset = Tags.objects.all()
+    queryset = Tag.objects.all()
     pagination_class = None
     serializer_class = TagsSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -100,7 +98,7 @@ class IngredientsViewSet(viewsets.ModelViewSet):
 
 
 class RecipesViewSet(viewsets.ModelViewSet):
-    queryset = Recipes.objects.all()
+    queryset = Recipe.objects.all()
     permission_classes = (IsAdminOrAuthor,)
     pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
@@ -115,7 +113,7 @@ class RecipesViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
     def add_recipe(self, model, request, pk):
-        recipe = get_object_or_404(Recipes, id=pk)
+        recipe = get_object_or_404(Recipe, id=pk)
         if model.objects.filter(
                 recipe=recipe,
                 user=request.user,
@@ -126,7 +124,7 @@ class RecipesViewSet(viewsets.ModelViewSet):
         return Response(data=serializer.data, status=HTTPStatus.CREATED)
 
     def delete_recipe(self, model, request, pk):
-        recipe = get_object_or_404(Recipes, id=pk)
+        recipe = get_object_or_404(Recipe, id=pk)
         if model.objects.filter(
                 user=request.user,
                 recipe=recipe,

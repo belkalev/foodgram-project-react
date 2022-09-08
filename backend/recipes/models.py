@@ -24,7 +24,7 @@ class Ingredient(models.Model):
         return self.name
 
 
-class Tags(models.Model):
+class Tag(models.Model):
     name = models.CharField(
         max_length=20,
         unique=True,
@@ -45,7 +45,7 @@ class Tags(models.Model):
         return self.name
 
 
-class Recipes(models.Model):
+class Recipe(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -62,13 +62,13 @@ class Recipes(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient,
         through="IngredientAmount",
-        related_name="ingridients",
+        related_name="recipes",
         verbose_name="Ингридиент",
     )
     tags = models.ManyToManyField(
-        Tags,
+        Tag,
         blank=True,
-        related_name="tags",
+        related_name="recipes",
         verbose_name="Тэги",
     )
     cooking_time = models.PositiveIntegerField(
@@ -105,7 +105,7 @@ class Favorite(models.Model):
         verbose_name='Пользователь'
     )
     recipe = models.ForeignKey(
-        Recipes,
+        Recipe,
         on_delete=models.CASCADE,
         related_name='fav',
         verbose_name='Избранные рецепты'
@@ -137,7 +137,7 @@ class Shoplist(models.Model):
         verbose_name='Пользователь'
     )
     recipe = models.ForeignKey(
-        Recipes,
+        Recipe,
         on_delete=models.CASCADE,
         related_name='shop',
         verbose_name='Рецепты'
@@ -160,7 +160,7 @@ class Shoplist(models.Model):
 
 class IngredientAmount(models.Model):
     recipe = models.ForeignKey(
-        Recipes,
+        Recipe,
         on_delete=models.CASCADE,
         related_name="ing_amounts",
         verbose_name="Рецепт",
