@@ -6,10 +6,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 cryptography==37.0.4
 defusedxml==0.7.1
-Django==2.2.19
-django-adminlte3==0.1.6
-django-cors-headers==3.13.0
-django-extra-fields==3.0.2
+Django==3.2.15
 django-filter==21.1
 django-templated-mail==1.1.1
 djangorestframework==3.12.4
@@ -52,3 +49,4 @@ typing_extensions==4.3.0
 uritemplate==4.1.1
 urllib3==1.26.11
 zipp==3.8.1
+django-adminlte3==0.1.6
