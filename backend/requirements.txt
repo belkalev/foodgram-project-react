@@ -13,7 +13,6 @@ django-extra-fields==3.0.2
 django-filter==21.1
 django-templated-mail==1.1.1
 djangorestframework==3.12.4
-djangorestframework-filters==0.11.1
 djangorestframework-simplejwt==4.8.0
 djoser==2.1.0
 drf-base64==2.0
