@@ -66,21 +66,20 @@
 
     `sudo apt install docker.io `
 
-3. Установите docker-compose на сервер:
+4. Установите docker-compose на сервер:
 ```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-4. Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP
+5. Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP
 
-5. Скопируйте файлы docker-compose.yml и nginx.conf из директории infra на сервер:
+6. Скопируйте файлы docker-compose.yml и nginx.conf из директории infra на сервер:
 
 `scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml`
 `scp nginx.conf <username>@<host>:/home/<username>/nginx.conf`
 
-6. Cоздайте .env файл и впишите:
-
+7. Cоздайте .env файл и впишите:
     ```
     DB_ENGINE=<django.db.backends.postgresql>
     DB_NAME=<имя базы данных postgres>
@@ -91,8 +90,7 @@ sudo chmod +x /usr/local/bin/docker-compose
     SECRET_KEY=<секретный ключ проекта django>
     ```
     
-7. Для работы с Workflow добавьте в Secrets GitHub переменные окружения для работы:
-
+8. Для работы с Workflow добавьте в Secrets GitHub переменные окружения для работы:
     ```
     DB_ENGINE=<django.db.backends.postgresql>
     DB_NAME=<имя базы данных postgres>
@@ -115,37 +113,37 @@ sudo chmod +x /usr/local/bin/docker-compose
     TELEGRAM_TOKEN=<токен вашего бота>
     ```
     
-8.  Workflow состоит из трёх шагов:
+9.  Workflow состоит из трёх шагов:
     
     -   Проверка кода на соответствие PEP8
     -   Сборка и публикация образа бекенда на DockerHub.
     -   Автоматический деплой на удаленный сервер.
     -   Отправка уведомления в телеграм-чат.
  
-9. На сервере соберите docker-compose:
-
+10. На сервере соберите docker-compose:
+ 
 `sudo docker-compose up -d --build`
 
-10. После успешной сборки на сервере выполните команды (только после первого деплоя):
+11. После успешной сборки на сервере выполните команды (только после первого деплоя):
     
-    -   Соберите статические файлы:
-
+  -   Соберите статические файлы:
+  
    `sudo docker-compose exec backend python manage.py collectstatic --noinput`
     
-    -   Примените миграции:
-
+   - Примените миграции:
+    
     `sudo docker-compose exec backend python manage.py migrate --noinput`
     
-    -   Загрузите ингридиенты в базу данных (необязательно):  
+   -   Загрузите ингридиенты в базу данных (необязательно):  
         _Если файл не указывать, по умолчанию выберется ingredients.json_
-    
+        
     `sudo docker-compose exec backend python manage.py load_ingredients <Название файла из директории data>`
     
-    -   Создать суперпользователя Django:
+   -   Создать суперпользователя Django:
+ 
+   `sudo docker-compose exec backend python manage.py createsuperuser`
     
-    - `sudo docker-compose exec backend python manage.py createsuperuser`
-    
-    -   Проект будет доступен по вашему IP
+   -   Проект будет доступен по вашему IP
 
 
 
