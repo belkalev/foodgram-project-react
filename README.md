@@ -24,25 +24,31 @@
 ### Запуск проекта локально
  
  1. Клонировать репозиторий и перейти в него
+
 ` git@github.com:belkalev/foodgram-project-react.git`
 
 2. Создать и активировать виртуальное окружение
+
 `python3 -m venv venv`
 `source venv/bin/activate `
 
 3. Обновить pip и установить зависимости
+
 ` python3 -m pip install --upgrade pip `
 ` pip install -r requirements.txt`
 
 4.  Перейти в папку **backend** 
+
 `сd backend`
 
 5.  Выполнить миграции и создать суперпользователя
+
 `python manage.py makemigrations`
 `python manage.py migrate`
 `python manage.py createsuperuser`
 
 6. Запустить сервер
+
 `python3 manage.py runserver`
 
 7. Для запуска fronted 
@@ -50,12 +56,14 @@
 - перейти в папку где хранится проект и найти папку **infra**
 
 8. Собрать контейнер
+
 `docker-compose up --build`
 
 ### Запуск проекта на удаленном сервере
 1. Выполните вход на свой удаленный сервер
     
 2. Установите docker на сервер:
+
     `sudo apt install docker.io `
 
 3. Установите docker-compose на сервер:
@@ -67,10 +75,12 @@ sudo chmod +x /usr/local/bin/docker-compose
 4. Локально отредактируйте файл infra/nginx.conf и в строке server_name впишите свой IP
 
 5. Скопируйте файлы docker-compose.yml и nginx.conf из директории infra на сервер:
+
 `scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml`
 `scp nginx.conf <username>@<host>:/home/<username>/nginx.conf`
 
 6. Cоздайте .env файл и впишите:
+
     ```
     DB_ENGINE=<django.db.backends.postgresql>
     DB_NAME=<имя базы данных postgres>
@@ -82,6 +92,7 @@ sudo chmod +x /usr/local/bin/docker-compose
     ```
     
 7. Для работы с Workflow добавьте в Secrets GitHub переменные окружения для работы:
+
     ```
     DB_ENGINE=<django.db.backends.postgresql>
     DB_NAME=<имя базы данных postgres>
@@ -112,21 +123,26 @@ sudo chmod +x /usr/local/bin/docker-compose
     -   Отправка уведомления в телеграм-чат.
  
 9. На сервере соберите docker-compose:
+
 `sudo docker-compose up -d --build`
 
 10. После успешной сборки на сервере выполните команды (только после первого деплоя):
     
     -   Соберите статические файлы:
+
    `sudo docker-compose exec backend python manage.py collectstatic --noinput`
     
     -   Примените миграции:
+
     `sudo docker-compose exec backend python manage.py migrate --noinput`
     
     -   Загрузите ингридиенты в базу данных (необязательно):  
         _Если файл не указывать, по умолчанию выберется ingredients.json_
+    
     `sudo docker-compose exec backend python manage.py load_ingredients <Название файла из директории data>`
     
     -   Создать суперпользователя Django:
+    
     - `sudo docker-compose exec backend python manage.py createsuperuser`
     
     -   Проект будет доступен по вашему IP
