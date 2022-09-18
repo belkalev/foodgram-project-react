@@ -44,7 +44,9 @@
 5.  Выполнить миграции и создать суперпользователя
 
 `python manage.py makemigrations`
+
 `python manage.py migrate`
+
 `python manage.py createsuperuser`
 
 6. Запустить сервер
