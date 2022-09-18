@@ -30,11 +30,13 @@
 2. Создать и активировать виртуальное окружение
 
 `python3 -m venv venv`
+
 `source venv/bin/activate `
 
 3. Обновить pip и установить зависимости
 
 ` python3 -m pip install --upgrade pip `
+
 ` pip install -r requirements.txt`
 
 4.  Перейти в папку **backend** 
@@ -130,7 +132,7 @@ sudo chmod +x /usr/local/bin/docker-compose
     
   -   Соберите статические файлы:
   
-   `sudo docker-compose exec backend python manage.py collectstatic --noinput`
+    `sudo docker-compose exec backend python manage.py collectstatic --noinput`
     
    - Примените миграции:
     
@@ -143,7 +145,7 @@ sudo chmod +x /usr/local/bin/docker-compose
     
    -   Создать суперпользователя Django:
  
-   `sudo docker-compose exec backend python manage.py createsuperuser`
+    `sudo docker-compose exec backend python manage.py createsuperuser`
     
    -   Проект будет доступен по вашему IP
 
