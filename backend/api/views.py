@@ -83,7 +83,7 @@ class UsersViewSet(UserViewSet):
 
 class TagsViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
-    pagination_class = None
+    pagination_class = LimitPageNumberPagination
     serializer_class = TagsSerializer
     permission_classes = (IsAdminOrReadOnly,)
 
