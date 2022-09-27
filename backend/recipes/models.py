@@ -16,7 +16,7 @@ class Ingredient(models.Model):
     )
 
     class Meta:
-        ordering = ['id', ]
+        ordering = ('name',)
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
 
@@ -38,6 +38,7 @@ class Tag(models.Model):
     slug = models.SlugField(unique=True)
 
     class Meta:
+        ordering = ('id',)
         verbose_name = 'Тэг'
         verbose_name_plural = 'Тэги'
 
