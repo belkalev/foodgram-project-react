@@ -52,6 +52,7 @@ class Recipe(models.Model):
         on_delete=models.CASCADE,
         related_name='recipes',
         verbose_name='Рецепт',
+        null=True
     )
     name = models.CharField(max_length=200)
     image = models.ImageField(
