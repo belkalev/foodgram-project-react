@@ -1,12 +1,12 @@
 from django.db.models import Sum
 from django.http import HttpResponse
 
-from recipes.models import AmountIngredient
+from recipes.models import IngredientAmount
 from django.conf import settings
 
 
 def get_ingredients_for_shopping(user):
-    ingredients = AmountIngredient.objects.filter(
+    ingredients = IngredientAmount.objects.filter(
         recipe__shopping_cart__user=user
     ).values(
         'ingredients__name',
